@@ -1,1 +1,0 @@
-# SchemaSync-master
