@@ -1,0 +1,75 @@
+Project maintaining again. If you want to help us, we really appreciate that.
+
+
+Schema Sync v0.9.4
++++++++++++++++++++
+a MySQL schema synchronization utility
+http://mmatuson.github.io/SchemaSync/
+
+
+SYNOPSIS
+========
+schemasync [options] <source> <target>
+
+# source/target format: mysql://user:pass@host:port/database
+# output format: <database>[_<tag>].YYYYMMDD.(patch|revert)[_<version>].sql
+
+
+DESCRIPTION
+===========
+Schema Sync will generate the SQL necessary to migrate the schema of a source database to a target database (patch script), as well as a the SQL necessary to undo the changes after you apply them (revert script).
+
+* Schema Sync does not alter your database. It only generates the .sql files containing the differences. You must apply the changes. 
+* Schema Sync does not yet recognize Tables or Columns that have been renamed. A rename will result in the old table or column being dropped and the new one added. 
+* All ADD|MODIFY COLUMN statements have the AFTER (or FIRST) SQL syntax even if no move is required. 
+* COMMENTS and AUTO_INCREMENT values are not by synced by default. See help (-h) for details.
+* Partitions (MySQL 5.1+) are not yet supported
+模式同步不会改变数据库。它只生成。包含差异的sql文件。您必须应用这些更改。
+模式同步还没有识别已被重命名的表或列。重命名将导致旧的表或列被删除，新的添加。
+所有添加修改列语句都有后(或第一个)SQL语法，即使不需要移动。
+默认情况下，注释和自动增值值不会同步。详情请参见帮助(-h)。
+分区(MySQL 5.1+)还不支持
+
+OPTIONS
+=================
+-h, --help            show this help message and exit帮助显示这个帮助消息和退出
+-V, --version         show version and exit.版本显示版本和退出。
+-r, --revision        increment the migration script version number if a file with the same name already exists.-r——修订增加了迁移脚本版本号,如果一个同名的文件已经存在。
+-a, --sync-auto-inc   sync the AUTO_INCREMENT value for each table.自动同步每个表的自动递增值。
+-c, --sync-comments   sync the COMMENT field for all tables AND columns同步所有表和列的注释字段
+-D, --no-date         removes the date from the file format 没有日期从文件格式中删除日期
+--charset=CHARSET     set the connection charset, default: utf8设置连接charset，默认设置:utf8
+--tag=TAG             tag the migration scripts as <database>_<tag>. Valid characters include [A-Za-z0-9-_]将迁移脚本标记为“数据库”。有效字符包括[A-Za-z0-9 _)
+
+
+--output-directory=OUTPUT_DIRECTORY
+                    directory to write the migration scrips. The default is current working directory. Must use absolute path if provided.
+					用于编写迁移记录的目录。默认是当前的工作目录。如果提供，必须使用绝对路径。
+--log-directory=LOG_DIRECTORY
+                    set the directory to write the log to. Must use absolute path if provided. Default is output directory. Log filename is schemasync.log
+					设置将日志写入的目录。如果提供，必须使用绝对路径。默认输出目录。日志文件名schemasync.log
+
+Download and Install
+====================
+
+Prerequisites
+-------------
+* To run Schema Sync, you need to have:
+    - Python 2.4, 2.5, or 2.6
+    - MySQL <http://www.mysql.com/>, version 5.0 or higher
+    - MySQLdb <http://sourceforge.net/projects/mysql-python>, version 1.2.1p2 or higher
+    - SchemaObject <http://matuson.com/code/schemaobject> 0.5.7 or higher
+* To run the test suite, you need to install a copy of the Sakila Database <http://dev.mysql.com/doc/sakila/en/index.html>, version 0.8
+
+Standard Installation
+---------------------
+For installation instructions, see http://mmatuson.github.io/SchemaSync/install.htm
+
+
+Status & License
+================
+It is released under the Apache License, Version 2.0 <http://www.apache.org/licenses/LICENSE-2.0>. 
+
+You can obtain a copy of the latest source code from the Git repository <http://github.com/mmatuson/SchemaSync>, or fork it on Github <http://www.github.com>.
+
+You can report bugs via the Schema Sync Issues page <http://github.com/mmatuson/SchemaSync/issues>
